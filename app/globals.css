@@ -16,6 +16,7 @@
     #54d6ff33 120deg,
     #0071ff33 160deg,
     transparent 360deg
+
   );
   --secondary-glow: radial-gradient(
     rgba(255, 255, 255, 1),
@@ -38,70 +39,62 @@
   --callout-border-rgb: 172, 175, 176;
   --card-rgb: 180, 185, 188;
   --card-border-rgb: 131, 134, 135;
+
+  /* LEMRtheme */
+  --primary: #00204a;
+  --secondary: #005792;
+  --light: #00bbf0;
+  --highlight: #fdb44b;
+  --warning: #c3195d;
+
+  --white: #edf2f6;
+  --black: #1a202c;
+
+  --green: lime;
+
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-
-    --primary-glow: radial-gradient(rgba(1, 65, 255, 0.4), rgba(1, 65, 255, 0));
-    --secondary-glow: linear-gradient(
-      to bottom right,
-      rgba(1, 65, 255, 0),
-      rgba(1, 65, 255, 0),
-      rgba(1, 65, 255, 0.3)
-    );
-
-    --tile-start-rgb: 2, 13, 46;
-    --tile-end-rgb: 2, 5, 19;
-    --tile-border: conic-gradient(
-      #ffffff80,
-      #ffffff40,
-      #ffffff30,
-      #ffffff20,
-      #ffffff10,
-      #ffffff10,
-      #ffffff80
-    );
-
-    --callout-rgb: 20, 20, 20;
-    --callout-border-rgb: 108, 108, 108;
-    --card-rgb: 100, 100, 100;
-    --card-border-rgb: 200, 200, 200;
-  }
+.container {
+  max-width: var(--max-width);
+  margin: 0.5rem auto;
+  display: flex;
+  flex-direction: column;
+    /*padding: 0 1rem;*/
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+.header1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.2;
 }
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
+.header2 {
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1.2;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.header3 {
+  font-size: 1.75rem;
+  font-weight: 500;
+  line-height: 1.2;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+.italicText {
+  font-size: 1.5rem;
+  line-height: 1.2;
+  font-style: italic;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+.buttonText {
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.2;
 }
+
+.standardText {
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+

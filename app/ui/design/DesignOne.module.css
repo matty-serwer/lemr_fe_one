@@ -1,0 +1,10 @@
+.buttonContainer {
+  display: flex;
+  gap: 20px;
+}
+
+@media (max-width: 700px) {
+  .buttonContainer {
+    flex-direction: column;
+  }
+}

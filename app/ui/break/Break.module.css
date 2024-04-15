@@ -1,0 +1,17 @@
+.one {
+    height: 1rem;
+    min-height: 1rem;
+    max-height: 1rem;
+}
+
+.two {
+    height: 2rem;
+    min-height: 2rem;
+    max-height: 2rem;
+}
+
+.three {
+    height: 3rem;
+    min-height: 3rem;
+    max-height: 3rem;
+}
