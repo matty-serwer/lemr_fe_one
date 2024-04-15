@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "@/app/ui/break/break.module.css";
+import styles from "@/app/ui/break/Break.module.css";
 
 interface BreakProps {
   size?: 'one' | 'two' | 'three';
