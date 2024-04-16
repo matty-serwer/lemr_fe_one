@@ -1,9 +1,14 @@
-import styles from "@/app/ui/patient/patient.module.css";
+import React from 'react';
+// styles
+import styles from "./Page.module.css";
 
-export default function Patient() {
+
+const Patient: React.FC = () => {
   return (
-    <main>
-      <h1>Patient Page</h1>
-    </main>
+    <div>
+      Patient
+    </div>
   );
-}
+};
+
+export default Patient;

@@ -1,0 +1,17 @@
+.headerContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--white);
+    color: var(--white);
+    border-bottom: 3px solid var(--secondary);
+}
+
+.logo {
+    color: var(--secondary);
+    font-size: 2.5rem;
+    font-weight: 700;
+    width: 100px;
+    height: 50px;
+    margin: 10px 20px 15px;
+}
