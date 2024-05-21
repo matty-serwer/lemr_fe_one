@@ -11,12 +11,20 @@ interface ButtonProps {
 
 const Button: React.FC<ButtonProps> = ({ mode, size, link, children, onClick }) => {
   const buttonClass = `${styles.button} ${styles[mode]} ${size === 'large' ? styles.large : ''}`;
+
+  const handleClick = (event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {
+    if (onClick) {
+      event.preventDefault();
+      onClick();
+    }
+  };
+
   return link ? (
-    <a href={link} className={buttonClass} onClick={onClick}>
+    <a href={link} className={buttonClass} onClick={handleClick}>
       {children}
     </a>
   ) : (
-    <button className={buttonClass} onClick={onClick}>{children}</button>
+    <button className={buttonClass} onClick={handleClick}>{children}</button>
   );
 };
 

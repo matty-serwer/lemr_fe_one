@@ -15,7 +15,7 @@ const NoteCard: React.FC<NoteCardProps> = ({ note }) => {
           <p className={styles.date}>Date: {note.createdAt}</p>
         </div>
         <div className={styles.body}>
-          {note.content.map((content, index) => (
+          {note.content.map((content: NoteContent, index: number) => (
             <p key={index}>{content.text}</p>
           ))}
         </div>
