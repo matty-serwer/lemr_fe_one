@@ -11,8 +11,4 @@ const Break: React.FC<BreakProps> = ({ size = "one" }) => {
   )
 }
 
-Break.defaultProps = {
-  size: 'one'
-}
-
 export default Break;
