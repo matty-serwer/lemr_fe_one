@@ -30,3 +30,12 @@ export interface Note {
   type: string;
   content: NoteContent[];
 }
+
+export interface NewNote {
+  patientId: string;
+  author: string;
+  type: string;
+  content: {
+    text: string
+  }[]
+}

@@ -1,55 +1,60 @@
 'use client'
 
-import React, {useEffect, useState} from 'react';
-import { useRouter, useParams, useSearchParams } from 'next/navigation';
-// UI
-import NoteCard from "@/app/ui/noteCard/NoteCard";
-import Button from "@/app/ui/button/Button" // Assuming your Button component is in the same directory
-// Styles
-import styles from "./Patient.module.css";
-// Data
-import { notes1 } from "../data/dummyData";
-// Types
-import { Note } from '@/app/typescript/Interfaces';
-import NewNoteFormModal from "@/app/modals/NewNoteFormModal/NewNoteFormModal";
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 
-const Patient: React.FC = () => {
+import NoteCard from '@/app/ui/noteCard/NoteCard';
+import Button from '@/app/ui/button/Button';
+import NewNoteFormModal from '@/app/modals/NewNoteFormModal/NewNoteFormModal';
+
+import styles from './Patient.module.css';
+import type { Note } from '@/app/typescript/Interfaces';
+import {fetchNotes, postNewNote} from '@/app/api/noteApi'
+
+const Patient = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [notes, setNotes] = useState([]);
+  const [notes, setNotes] = useState<Note[]>([]);
   const searchParams = useSearchParams();
   const patientId = searchParams.get('id');
 
-  const handleAddNote = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
   useEffect(() => {
-    fetch(`/api/notes?patientId=${patientId}`)
-      .then(response => response.json())
-      .then(data => setNotes(data));
+    if (!patientId) return;
+
+    fetchNotes(patientId).then((data) => {
+      setNotes(data);
+    });
   }, [patientId]);
+
+  const handleModalToggle = () => {
+    setIsModalOpen((prev) => !prev);
+  };
+
+  const handleCreateNote = async (clinician: string, content: string) => {
+    if (!patientId) return;
+
+    try {
+      const newNoteRequest = {
+        patientId,
+        author: clinician,
+        type: 'note', // Replace with the actual type of note
+        content: [{ text: content }] // Assuming NoteContent has a text property
+      };
+      await postNewNote(newNoteRequest);
+      const updatedNotes = await fetchNotes(patientId);
+      setNotes(updatedNotes);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className={styles.container}>
-      {notes.map((note: Note) => (
+      {notes.map((note) => (
         <NoteCard key={note.id} note={note} />
       ))}
-
-      <Button mode="primary" onClick={handleAddNote}>Add Note</Button>
-
-      <NewNoteFormModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        onCreate={(clinician, content) => {
-          // Handle adding the new note to notes1
-        }}
-      />
-      <div>Current Patient ID: </div>
-      <div>{patientId}</div>
+      <Button mode="primary" onClick={handleModalToggle}>Add Note</Button>
+      <NewNoteFormModal isOpen={isModalOpen} onClose={handleModalToggle} onCreate={handleCreateNote} />
+      <div>Current Patient ID: {patientId}</div>
     </div>
   );
 };
