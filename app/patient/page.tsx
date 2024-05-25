@@ -10,6 +10,7 @@ import NewNoteFormModal from '@/app/modals/NewNoteFormModal/NewNoteFormModal';
 import styles from './Patient.module.css';
 import type { Note } from '@/app/typescript/Interfaces';
 import {fetchNotes, postNewNote} from '@/app/api/noteApi'
+import Loading from "@/app/ui/loading/Loading";
 
 const Patient = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,12 +18,17 @@ const Patient = () => {
   const searchParams = useSearchParams();
   const patientId = searchParams.get('id');
 
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     if (!patientId) return;
 
-    fetchNotes(patientId).then((data) => {
-      setNotes(data);
-    });
+    setIsLoading(true);
+    fetchNotes(patientId)
+      .then((data) => {
+        setNotes(data);
+      })
+      .finally(() => setIsLoading(false));
   }, [patientId]);
 
   const handleModalToggle = () => {
@@ -49,12 +55,24 @@ const Patient = () => {
 
   return (
     <div className={styles.container}>
-      {notes.map((note) => (
-        <NoteCard key={note.id} note={note} />
-      ))}
-      <Button mode="primary" onClick={handleModalToggle}>Add Note</Button>
-      <NewNoteFormModal isOpen={isModalOpen} onClose={handleModalToggle} onCreate={handleCreateNote} />
-      <div>Current Patient ID: {patientId}</div>
+      {isLoading ? ( // Conditional rendering
+        <Loading />
+      ) : (
+        <>
+          {notes.map((note) => (
+            <NoteCard key={note.id} note={note} />
+          ))}
+          <Button mode="primary" onClick={handleModalToggle}>
+            Add Note
+          </Button>
+          <NewNoteFormModal
+            isOpen={isModalOpen}
+            onClose={handleModalToggle}
+            onCreate={handleCreateNote}
+          />
+          <div>Current Patient ID: {patientId}</div>
+        </>
+      )}
     </div>
   );
 };
