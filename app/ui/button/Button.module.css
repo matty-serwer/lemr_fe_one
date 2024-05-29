@@ -1,66 +1,144 @@
 .button {
-    padding: 12px 20px;
-    border: none;
+    padding: 10px 20px;
+    border: none; /* Add a transparent border */
     border-radius: 8px;
-    color: var(--white);
     font-size: 1.25rem;
-    font-weight: 700;
+    font-weight: 600;
     width: auto;
     max-width: min-content;
     cursor: pointer;
     text-decoration: none;
     white-space: nowrap;
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    background-color: currentColor; /* Set the background color to the current color */
+    color: var(--white); /* Set the text color to white */
+}
+
+.shadow {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .button:hover {
-    padding: 10px 18px;
-    background-color: transparent;
-    color: currentColor;
+    background-color: transparent; /* Make the background color translucent on hover */
+    color: var(--white);
+}
+
+.outline {
+    background-color: var(--white);
     border: 2px solid currentColor;
 }
 
+.outline:hover {
+    border: 2px solid transparent;
+}
+
 .primary {
+    color: var(--white);
+    background-color: var(--primary);
+    border: 2px solid var(--primary);
+}
+
+.primary:hover {
+    background-color: transparent;
+    color: var(--primary);
+}
+
+.outline.primary {
+    border-color: var(--primary);
+    color: var(--primary);
+    background-color: transparent;
+}
+
+.outline.primary:hover {
     background-color: var(--primary);
     color: var(--white);
 }
 
-.primary:hover {
-    color: var(--primary);
+.secondary {
+    color: var(--white);
+    background-color: var(--secondary);
+    border: 2px solid var(--secondary);
 }
 
-.secondary {
+.secondary:hover {
+    background-color: transparent;
+    color: var(--secondary);
+}
+
+.outline.secondary {
+    border-color: var(--secondary);
+    color: var(--secondary);
+    background-color: transparent;
+}
+
+.outline.secondary:hover {
     background-color: var(--secondary);
     color: var(--white);
 }
 
-.secondary:hover {
-    color: var(--secondary);
+.light {
+    color: var(--white);
+    background-color: var(--light);
+    border: 2px solid var(--light);
 }
 
-.light {
+.light:hover {
+    background-color: transparent;
+    color: var(--light);
+}
+
+.outline.light {
+    border-color: var(--light);
+    color: var(--light);
+    background-color: transparent;
+}
+
+.outline.light:hover {
     background-color: var(--light);
     color: var(--white);
 }
 
-.light:hover {
-    color: var(--light);
+.highlight {
+    color: var(--white);
+    background-color: var(--highlight);
+    border: 2px solid var(--highlight);
 }
 
-.highlight {
+.highlight:hover {
+    background-color: transparent;
+    color: var(--highlight);
+}
+
+.outline.highlight {
+    border-color: var(--highlight);
+    color: var(--highlight);
+    background-color: transparent;
+}
+
+.outline.highlight:hover {
     background-color: var(--highlight);
     color: var(--white);
 }
 
-.highlight:hover {
-    color: var(--highlight);
-}
-
 .warning {
-    background-color: var(--warning);
     color: var(--white);
+    background-color: var(--warning);
+    border: 2px solid var(--warning);
 }
 
 .warning:hover {
+    background-color: transparent;
     color: var(--warning);
+}
+
+.outline.warning {
+    border-color: var(--warning);
+    color: var(--warning);
+    background-color: var(--white-alpha);
+    background-color: transparent;
+}
+
+.outline.warning:hover {
+    background-color: var(--warning);
+    color: var(--white);
 }

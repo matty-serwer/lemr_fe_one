@@ -5,12 +5,14 @@ interface ButtonProps {
   mode: 'primary' | 'secondary' | 'light' | 'highlight' | 'warning';
   size?: 'large';
   link?: string;
+  outline?: boolean;
+  shadow?: boolean;
   children: React.ReactNode;
-  onClick?: () => void; // Add this line
+  onClick?: () => void;
 }
 
-const Button: React.FC<ButtonProps> = ({ mode, size, link, children, onClick }) => {
-  const buttonClass = `${styles.button} ${styles[mode]} ${size === 'large' ? styles.large : ''}`;
+const Button: React.FC<ButtonProps> = ({ mode, size, link, outline, shadow, children, onClick }) => {
+  const buttonClass = `${styles.button} ${outline ? styles.outline : ''} ${styles[mode]} ${size === 'large' ? styles.large : ''} ${shadow ? styles.shadow : ''}`;
 
   const handleClick = (event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {
     if (onClick) {

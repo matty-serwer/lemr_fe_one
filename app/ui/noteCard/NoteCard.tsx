@@ -1,6 +1,7 @@
 import React from 'react';
+import { Box, Text, Heading } from '@chakra-ui/react';
 import { Note, NoteContent } from '@/app/typescript/Interfaces';
-import styles from './NoteCard.module.css';
+import { format } from 'date-fns';
 
 interface NoteCardProps {
   note: Note;
@@ -8,19 +9,36 @@ interface NoteCardProps {
 
 const NoteCard: React.FC<NoteCardProps> = ({ note }) => {
   return (
-    <div className={styles.cardContainer}>
-      <div className={styles.noteCard}>
-        <div className={styles.header}>
-          <h2 className={styles.clinician}>Clinician: {note.author}</h2>
-          <p className={styles.date}>Date: {note.createdAt}</p>
-        </div>
-        <div className={styles.body}>
-          {note.content.map((content: NoteContent, index: number) => (
-            <p key={index}>{content.text}</p>
-          ))}
-        </div>
-      </div>
-    </div>
+    <Box
+      bg="whiteAlpha.800"
+      boxShadow="lg"
+      p={4}
+      mb={4}
+      border="2px solid"
+      borderColor="secondary"
+      borderRadius="var(--border-radius)"
+    >
+      <Box
+        borderBottom="2px solid"
+        borderBottomColor="secondary"
+        pb={2}
+        mb={2}
+      >
+        <Text fontSize="1rem" fontWeight="700" color="secondary">
+          Clinician: {note.author === '' ? 'Designation Not Provided' : note.author}
+        </Text>
+        <Text fontSize="0.8rem" fontWeight="500" color="secondary">
+          Date: {format(note.createdAt, 'MMMM dd, yyyy hh:mm a')}
+        </Text>
+      </Box>
+      <Box>
+        {note.content.map((content: NoteContent, index: number) => (
+          <Text key={index} fontSize="1.2rem" fontWeight="500" color="primary">
+            {content.text}
+          </Text>
+        ))}
+      </Box>
+    </Box>
   );
 };
 

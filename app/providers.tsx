@@ -3,6 +3,13 @@
 import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 
 const lemrTheme = extendTheme({
+  colors: {
+    primary: '#074fb5',
+    secondary: '#0962ea',
+    light: '#0aa0f6',
+    highlight: '#faf15d',
+    warning: '#c3195d',
+  },
   styles: {
     global: {
       body: {

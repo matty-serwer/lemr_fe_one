@@ -62,15 +62,21 @@ const Patient = () => {
           {notes.map((note) => (
             <NoteCard key={note.id} note={note} />
           ))}
-          <Button mode="primary" onClick={handleModalToggle}>
-            Add Note
-          </Button>
+          <section className={styles.buttons}>
+            <Button
+              mode="warning"
+              onClick={handleModalToggle}
+              outline={true}
+              shadow={true}
+            >
+              Add Note
+            </Button>
+          </section>
           <NewNoteFormModal
             isOpen={isModalOpen}
             onClose={handleModalToggle}
             onCreate={handleCreateNote}
           />
-          <div>Current Patient ID: {patientId}</div>
         </>
       )}
     </div>
