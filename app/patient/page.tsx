@@ -2,7 +2,7 @@
 
 'use client'
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import axios from 'axios';
 // UI
@@ -86,38 +86,40 @@ const Patient: React.FC = () => {
   }, [patientId]);
 
   return (
-    <div className={styles.container}>
-      <section id="patientInfo" className={styles.patientInfo}>
-        {currentPatient ? (
+    <Suspense fallback={<div>Loading...</div>}>
+      <div className={styles.container}>
+        <section id="patientInfo" className={styles.patientInfo}>
+          {currentPatient ? (
             <h1 className={styles.patientName}>Profile: {currentPatient.name}</h1>
-        ) : (
-          <div>
-          {/* No Patient Name */}
-          </div>
-        )}
-      </section>
-      <section id="patientNotes" className={styles.patientNotes}>
-      {notes.length > 0 ? (
-        <div className={styles.notesContainer}>
-          {notes
-            .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-            .map((note: Note) => (
-              <NoteCard key={note.id} note={note} />
-            ))}
+          ) : (
+            <div>
+              {/* No Patient Name */}
+            </div>
+          )}
+        </section>
+        <section id="patientNotes" className={styles.patientNotes}>
+          {notes.length > 0 ? (
+            <div className={styles.notesContainer}>
+              {notes
+                .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+                .map((note: Note) => (
+                  <NoteCard key={note.id} note={note} />
+                ))}
+            </div>
+          ) : (
+            error && <AlertCard message={error} />
+          )}
+        </section>
+        <div className={styles.buttonContainer}>
+          <Button mode="primary" onClick={handleAddNote}>Add Note</Button>
         </div>
-      ) : (
-        error && <AlertCard message={error} />
-      )}
-      </section>
-      <div className={styles.buttonContainer}>
-        <Button mode="primary" onClick={handleAddNote}>Add Note</Button>
+        <NewNoteFormModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          onCreate={handleCreateNote}
+        />
       </div>
-      <NewNoteFormModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        onCreate={handleCreateNote}
-      />
-    </div>
+    </Suspense>
   );
 };
 
