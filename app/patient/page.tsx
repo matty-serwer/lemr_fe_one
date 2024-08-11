@@ -1,8 +1,6 @@
-// app/patient/page.tsx
-
 'use client'
 
-import React, { useEffect, useState, Suspense } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import axios from 'axios';
 // UI
@@ -22,8 +20,14 @@ const Patient: React.FC = () => {
   const [notes, setNotes] = useState<Note[]>([]);
   const [currentPatient, setCurrentPatient] = useState<PatientType | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [patientId, setPatientId] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const searchParams = useSearchParams();
-  const patientId = searchParams.get('id');
+
+  useEffect(() => {
+    const id = searchParams.get('id');
+    setPatientId(id);
+  }, [searchParams]);
 
   const handleAddNote = () => {
     setIsModalOpen(true);
@@ -58,6 +62,7 @@ const Patient: React.FC = () => {
 
   useEffect(() => {
     const fetchNotes = async () => {
+      setIsLoading(true);
       try {
         const encodedPatientId = encodeURIComponent(`Patient#${patientId}`);
         const response = await axios.get(`${apiUrl}/patients/${encodedPatientId}`);
@@ -77,6 +82,8 @@ const Patient: React.FC = () => {
       } catch (error) {
         console.error('Error fetching notes:', error);
         setError('Patient not found. Please try again.');
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -86,40 +93,44 @@ const Patient: React.FC = () => {
   }, [patientId]);
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <div className={styles.container}>
-        <section id="patientInfo" className={styles.patientInfo}>
-          {currentPatient ? (
-            <h1 className={styles.patientName}>Profile: {currentPatient.name}</h1>
-          ) : (
-            <div>
-              {/* No Patient Name */}
-            </div>
-          )}
-        </section>
-        <section id="patientNotes" className={styles.patientNotes}>
-          {notes.length > 0 ? (
-            <div className={styles.notesContainer}>
-              {notes
-                .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-                .map((note: Note) => (
-                  <NoteCard key={note.id} note={note} />
-                ))}
-            </div>
-          ) : (
-            error && <AlertCard message={error} />
-          )}
-        </section>
-        <div className={styles.buttonContainer}>
-          <Button mode="primary" onClick={handleAddNote}>Add Note</Button>
-        </div>
-        <NewNoteFormModal
-          isOpen={isModalOpen}
-          onClose={handleCloseModal}
-          onCreate={handleCreateNote}
-        />
-      </div>
-    </Suspense>
+    <div className={styles.container}>
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <>
+          <section id="patientInfo" className={styles.patientInfo}>
+            {currentPatient ? (
+              <h1 className={styles.patientName}>Profile: {currentPatient.name}</h1>
+            ) : (
+              <div>
+                {/* No Patient Name */}
+              </div>
+            )}
+          </section>
+          <section id="patientNotes" className={styles.patientNotes}>
+            {notes.length > 0 ? (
+              <div className={styles.notesContainer}>
+                {notes
+                  .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+                  .map((note: Note) => (
+                    <NoteCard key={note.id} note={note} />
+                  ))}
+              </div>
+            ) : (
+              error && <AlertCard message={error} />
+            )}
+          </section>
+          <div className={styles.buttonContainer}>
+            <Button mode="primary" onClick={handleAddNote}>Add Note</Button>
+          </div>
+          <NewNoteFormModal
+            isOpen={isModalOpen}
+            onClose={handleCloseModal}
+            onCreate={handleCreateNote}
+          />
+        </>
+      )}
+    </div>
   );
 };
 
