@@ -15,9 +15,7 @@ const note: Note = {
   "updatedAt": "2022-03-30T12:00:00Z",
   "type": "standard",
   "content": [
-    {
-      "text": "This is some example note content text. Lorem Ipsum Epsilon Jabroni1"
-    }
+    "This is some example note content text. Lorem Ipsum Epsilon Jabroni1"
   ]
 }
 
