@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import axios from 'axios';
 // UI
@@ -15,7 +15,7 @@ import NewNoteFormModal from "@/app/modals/NewNoteFormModal/NewNoteFormModal";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-const Patient: React.FC = () => {
+const PatientComponent: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [notes, setNotes] = useState<Note[]>([]);
   const [currentPatient, setCurrentPatient] = useState<PatientType | null>(null);
@@ -133,5 +133,11 @@ const Patient: React.FC = () => {
     </div>
   );
 };
+
+const Patient: React.FC = () => (
+  <Suspense fallback={<div>Loading patient data...</div>}>
+    <PatientComponent />
+  </Suspense>
+);
 
 export default Patient;
