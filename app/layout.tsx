@@ -1,3 +1,4 @@
+
 import type { Metadata } from "next";
 import { Inter, Nunito_Sans } from "next/font/google";
 // styles

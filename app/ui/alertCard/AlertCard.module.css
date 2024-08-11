@@ -1,0 +1,19 @@
+.cardContainer {
+    width: 100%;
+    margin: 2rem 0;
+}
+.alertCard {
+    margin-top: 20%;
+    background-color: var(--white);
+    border: 3px solid var(--primary);
+    border-radius: var(--border-radius);
+    padding: 20px;
+}
+
+.message {
+    color: var(--primary);
+    font-size: 1.6rem;
+    font-weight: 500;
+    line-height: 1.2;
+    margin: 0 0 0.3rem 0;
+}

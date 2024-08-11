@@ -1,3 +1,21 @@
+
 .container {
-    margin: 0 1rem;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    min-height: calc(100vh - 118px);
+    margin: auto;
+}
+
+.layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: auto;
+}
+
+.content {
+    max-width: 1200px;
+    margin: 0 20px;
+    flex: 1;
 }

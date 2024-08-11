@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import Button from '@/app/ui/button/Button';
 import styles from './NewNoteFormModal.module.css';
@@ -32,17 +33,17 @@ const NewNoteFormModal: React.FC<NewNoteFormModalProps> = ({ isOpen, onClose, on
         <label className={styles.label}>
           Clinician&apos;s Name
         </label>
-          <input type="text"
-                 value={clinicianName}
-                 onChange={(e) => setClinicianName(e.target.value)}
-                 className={styles.textInput}/>
+        <input type="text"
+               value={clinicianName}
+               onChange={(e) => setClinicianName(e.target.value)}
+               className={styles.textInput}/>
         <label className={styles.label}>
           Note Content
         </label>
-          <textarea value={noteContent}
-                    onChange={(e) => setNoteContent(e.target.value)}
-                    className={styles.textArea}
-                    rows={8}/>
+        <textarea value={noteContent}
+                  onChange={(e) => setNoteContent(e.target.value)}
+                  className={styles.textArea}
+                  rows={8}/>
         <div className={styles.buttonGroup}>
           <Button mode="secondary" onClick={handleCreate}>Create</Button>
           <Button mode="warning" onClick={onClose}>Cancel</Button>

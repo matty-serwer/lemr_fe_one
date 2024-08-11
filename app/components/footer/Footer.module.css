@@ -1,0 +1,15 @@
+/* app/components/footer/Footer.module.css */
+.footerContainer {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center;
+    background-color: var(--white);
+    color: var(--primary);
+    border-top: 3px solid var(--primary);
+    text-align: center; /* Ensure text is centered */
+    height: 40px;
+}
+
+.footerText {
+    margin: 0; /* Remove any default margin */
+}

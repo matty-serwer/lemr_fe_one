@@ -1,3 +1,4 @@
+
 'use client'
 
 import React, { useEffect, useState } from 'react';
@@ -5,6 +6,7 @@ import { useSearchParams } from 'next/navigation';
 import axios from 'axios';
 // UI
 import NoteCard from "@/app/ui/noteCard/NoteCard";
+import AlertCard from "@/app/ui/alertCard/AlertCard";
 import Button from "@/app/ui/button/Button";
 // Styles
 import styles from "./Patient.module.css";
@@ -17,7 +19,7 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 const Patient: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [notes, setNotes] = useState<Note[]>([]);
-  const[currentPatient, setCurrentPatient] = useState<PatientType | null>(null);
+  const [currentPatient, setCurrentPatient] = useState<PatientType | null>(null);
   const [error, setError] = useState<string | null>(null);
   const searchParams = useSearchParams();
   const patientId = searchParams.get('id');
@@ -30,10 +32,34 @@ const Patient: React.FC = () => {
     setIsModalOpen(false);
   };
 
+// app/patient/page.tsx
+
+  const handleCreateNote = async (clinicianName: string, noteContent: string) => {
+    try {
+      const encodedPatientId = encodeURIComponent(`Patient#${patientId}`);
+      const response = await axios.post(`${apiUrl}/patients/${encodedPatientId}/notes`, {
+        author: clinicianName,
+        content: noteContent,
+      });
+
+      if (response.data) {
+        // Introduce a delay before fetching the updated notes
+        setTimeout(async () => {
+          const updatedResponse = await axios.get(`${apiUrl}/patients/${encodedPatientId}`);
+          if (updatedResponse.data && updatedResponse.data.notes) {
+            setNotes(updatedResponse.data.notes);
+          }
+        }, 1000); // 1 second delay
+      }
+    } catch (error) {
+      console.error('Error creating note:', error);
+      setError('Error creating note. Please try again.');
+    }
+  };
+
   useEffect(() => {
     const fetchNotes = async () => {
       try {
-        // URL encode the patient ID to handle any special characters
         const encodedPatientId = encodeURIComponent(`Patient#${patientId}`);
         const response = await axios.get(`${apiUrl}/patients/${encodedPatientId}`);
         console.log('response', response);
@@ -62,13 +88,14 @@ const Patient: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      {error && <div className={styles.error}>{error}</div>}
       {notes.length > 0 ? (
-        notes.map((note: Note) => (
+        <div className={styles.notesContainer}>
+          { notes.map((note: Note) => (
           <NoteCard key={note.id} note={note} />
-        ))
+        ))}
+        </div>
       ) : (
-        !error && <div>No notes available.</div>
+        error && <AlertCard message={error} />
       )}
 
       <Button mode="primary" onClick={handleAddNote}>Add Note</Button>
@@ -76,12 +103,8 @@ const Patient: React.FC = () => {
       <NewNoteFormModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
-        onCreate={(clinician, content) => {
-          // Handle adding the new note to notes1
-        }}
+        onCreate={handleCreateNote}
       />
-      <div>Current Patient ID: </div>
-      <div>{patientId}</div>
     </div>
   );
 };
