@@ -15,11 +15,12 @@ export interface Patient {
   medicalHistory: string[];
   emergencyContacts: EmergencyContact[];
   currentMedications: string[];
+  notes: Note[];
 }
 
-export interface NoteContent {
-  text: string;
-}
+// export interface NoteContent {
+//   text: string;
+// }
 
 export interface Note {
   id: string;
@@ -28,5 +29,5 @@ export interface Note {
   createdAt: string;
   updatedAt?: string;
   type: string;
-  content: NoteContent[];
+  content: String[];
 }

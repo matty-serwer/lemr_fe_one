@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <h1>LEMR ONE</h1>
-      <DesignOne />
+      {/*<DesignOne />*/}
     </main>
   );
 }

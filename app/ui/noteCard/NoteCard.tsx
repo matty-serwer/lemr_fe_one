@@ -1,5 +1,5 @@
 import React from 'react';
-import { Note, NoteContent } from '@/app/typescript/Interfaces';
+import { Note } from '@/app/typescript/Interfaces';
 import styles from './NoteCard.module.css';
 
 interface NoteCardProps {
@@ -15,8 +15,9 @@ const NoteCard: React.FC<NoteCardProps> = ({ note }) => {
           <p className={styles.date}>Date: {note.createdAt}</p>
         </div>
         <div className={styles.body}>
-          {note.content.map((content: NoteContent, index: number) => (
-            <p key={index}>{content.text}</p>
+          {note.content.map((content: String, index: number) => (
+            console.log('content', content),
+            <p key={index}>{content}</p>
           ))}
         </div>
       </div>
