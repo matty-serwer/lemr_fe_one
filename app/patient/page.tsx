@@ -1,3 +1,4 @@
+// app/patient/page.tsx
 
 'use client'
 
@@ -31,8 +32,6 @@ const Patient: React.FC = () => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
-
-// app/patient/page.tsx
 
   const handleCreateNote = async (clinicianName: string, noteContent: string) => {
     try {
@@ -88,18 +87,31 @@ const Patient: React.FC = () => {
 
   return (
     <div className={styles.container}>
+      <section id="patientInfo" className={styles.patientInfo}>
+        {currentPatient ? (
+            <h1 className={styles.patientName}>Profile: {currentPatient.name}</h1>
+        ) : (
+          <div>
+          {/* No Patient Name */}
+          </div>
+        )}
+      </section>
+      <section id="patientNotes" className={styles.patientNotes}>
       {notes.length > 0 ? (
         <div className={styles.notesContainer}>
-          { notes.map((note: Note) => (
-          <NoteCard key={note.id} note={note} />
-        ))}
+          {notes
+            .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+            .map((note: Note) => (
+              <NoteCard key={note.id} note={note} />
+            ))}
         </div>
       ) : (
         error && <AlertCard message={error} />
       )}
-
-      <Button mode="primary" onClick={handleAddNote}>Add Note</Button>
-
+      </section>
+      <div className={styles.buttonContainer}>
+        <Button mode="primary" onClick={handleAddNote}>Add Note</Button>
+      </div>
       <NewNoteFormModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}

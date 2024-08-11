@@ -29,5 +29,5 @@ export interface Note {
   createdAt: string;
   updatedAt?: string;
   type: string;
-  content: String[];
+  content: string[];
 }

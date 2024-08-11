@@ -1,11 +1,4 @@
-
-.container {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    min-height: calc(100vh - 118px);
-    margin: auto;
-}
+/*Patient Layout*/
 
 .layout {
     display: flex;
@@ -19,3 +12,32 @@
     margin: 0 20px;
     flex: 1;
 }
+
+/* Patient Page */
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    min-height: calc(100vh - 118px);
+    margin: auto;
+}
+
+.patientInfo {
+    display: flex;
+    justify-content: flex-start;
+    margin: 20px 0 0;
+}
+
+.patientName {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--secondary);
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: flex-end;
+    margin: 20px 0;
+}
+
